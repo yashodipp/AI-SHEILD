@@ -46,6 +46,7 @@ class Config:
     GEMINI_API_KEY = os.getenv("GEMINI_API_KEY", "")
     GEMINI_MODEL = os.getenv("GEMINI_MODEL", "gemini-2.5-flash")
     AI_AGENT_TIMEOUT_SECONDS = float(os.getenv("AI_SHIELD_LLM_TIMEOUT_SECONDS", "12"))
+    NORMALIZE_LEGACY_REPORTS = os.getenv("AI_SHIELD_NORMALIZE_LEGACY_REPORTS", "false").lower() == "true"
 
     ALLOWED_VIDEO_EXTENSIONS = {"mp4", "mov", "avi", "mkv", "webm"}
     ALLOWED_AUDIO_EXTENSIONS = {"wav", "mp3", "aac", "m4a", "ogg"}

@@ -44,7 +44,8 @@ def create_app(config_override: Optional[dict] = None) -> Flask:
         str(Path(app.config["UPLOADS_DIR"]) / "news-image"),
         str(Path(app.config["UPLOADS_DIR"]) / "video-url"),
     )
-    normalize_all_reports(app.config["REPORTS_DIR"])
+    if app.config["NORMALIZE_LEGACY_REPORTS"]:
+        normalize_all_reports(app.config["REPORTS_DIR"])
     init_db(app.config["DATABASE_PATH"])
 
     app.register_blueprint(video_bp, url_prefix="/api/video")

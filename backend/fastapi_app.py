@@ -74,6 +74,7 @@ def _config() -> dict[str, object]:
         "lookback_days": Config.NEWS_LOOKUP_DAYS,
         "page_size": Config.NEWS_LOOKUP_PAGE_SIZE,
         "timeout_seconds": Config.URL_FETCH_TIMEOUT_SECONDS,
+        "normalize_legacy_reports": Config.NORMALIZE_LEGACY_REPORTS,
     }
 
 
@@ -111,7 +112,8 @@ def startup() -> None:
         str(Path(str(config["uploads_dir"])) / "video-url"),
         str(Path(str(config["uploads_dir"])) / "audio"),
     )
-    normalize_all_reports(str(config["reports_dir"]))
+    if bool(config["normalize_legacy_reports"]):
+        normalize_all_reports(str(config["reports_dir"]))
     init_db(str(config["database_path"]))
 
 
