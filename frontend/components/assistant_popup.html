@@ -1,0 +1,83 @@
+<div class="assistant-root" id="assistantRoot">
+  <button class="assistant-fab" id="assistantLauncher" type="button" aria-label="Open AI Shield Assistant" aria-expanded="false">
+    <span class="assistant-fab-ping" aria-hidden="true"></span>
+    <span class="assistant-fab-label">AI</span>
+  </button>
+
+  <div class="assistant-popup" id="assistantPopup" aria-hidden="true">
+    <button class="assistant-overlay" id="assistantOverlay" type="button" aria-label="Close AI Shield Assistant"></button>
+
+    <section class="assistant-window" role="dialog" aria-modal="false" aria-labelledby="assistantTitle">
+      <header class="assistant-window-header">
+        <div>
+          <p class="eyebrow">AI Shield Assistant</p>
+          <h3 id="assistantTitle">Voice-enabled help across the whole platform</h3>
+        </div>
+        <div class="assistant-window-actions">
+          <button class="assistant-chip" id="assistantMuteToggle" type="button" aria-pressed="false">Voice On</button>
+          <button class="assistant-chip" id="assistantClearBtn" type="button">Clear</button>
+          <button class="assistant-chip danger" id="assistantCloseBtn" type="button">Close</button>
+        </div>
+      </header>
+
+      <div class="assistant-toolbar">
+        <div class="assistant-language-group" id="assistantLanguageGroup" aria-label="Assistant language">
+          <button class="assistant-language-btn is-active" type="button" data-language="auto" aria-pressed="true">Auto</button>
+          <button class="assistant-language-btn" type="button" data-language="en" aria-pressed="false">English</button>
+          <button class="assistant-language-btn" type="button" data-language="hi" aria-pressed="false">Hindi</button>
+        </div>
+        <div class="assistant-status-group">
+          <span class="assistant-status-pill" id="assistantStatusPill">Ready</span>
+          <span class="assistant-status-pill subtle" id="assistantLanguageLabel">Auto</span>
+        </div>
+      </div>
+
+      <div class="assistant-wave" id="assistantWave" aria-hidden="true">
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+      </div>
+
+      <div class="assistant-quick-prompts" id="assistantQuickPrompts">
+        <button class="assistant-prompt" type="button" data-prompt="How do I analyze a video?">Analyze video</button>
+        <button class="assistant-prompt" type="button" data-prompt="Explain the confidence score.">Confidence score</button>
+        <button class="assistant-prompt" type="button" data-prompt="How can I download my reports?">Download reports</button>
+        <button class="assistant-prompt" type="button" data-prompt="मुझे वेबसाइट का उपयोग समझाओ।">Hindi help</button>
+      </div>
+
+      <section class="assistant-conversation-shell">
+        <div class="assistant-view-switch">
+          <button class="assistant-view-btn is-active" type="button" data-view="chat" aria-pressed="true">Chat</button>
+          <button class="assistant-view-btn" type="button" data-view="messages" aria-pressed="false">Messages</button>
+        </div>
+
+        <div class="assistant-content-panel is-active" id="assistantChatPanel">
+          <div class="assistant-chat-log" id="assistantChatLog" aria-live="polite"></div>
+        </div>
+
+        <div class="assistant-content-panel" id="assistantMessagePanel" hidden>
+          <div class="assistant-message-center" id="assistantMessageCenter"></div>
+        </div>
+      </section>
+
+      <div class="assistant-footer">
+        <p class="assistant-footnote" id="assistantFootnote">
+          Type or speak in Hindi or English. AI Shield Assistant will reply in the same language.
+        </p>
+
+        <form class="assistant-form" id="assistantForm">
+          <input
+            id="assistantInput"
+            type="text"
+            autocomplete="off"
+            placeholder="Ask anything about AI Shield, results, uploads, or reports"
+          >
+          <button class="assistant-icon-button" id="assistantMicBtn" type="button" aria-label="Start voice input">Mic</button>
+          <button class="button primary assistant-send" id="assistantSendBtn" type="submit">Send</button>
+        </form>
+      </div>
+    </section>
+  </div>
+</div>

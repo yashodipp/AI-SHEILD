@@ -1,0 +1,34 @@
+{
+  "trusted_domains": {
+    "bbc.com": {"tier": "high", "label": "International news"},
+    "reuters.com": {"tier": "high", "label": "Wire service"},
+    "apnews.com": {"tier": "high", "label": "Wire service"},
+    "thehindu.com": {"tier": "high", "label": "Indian news"},
+    "indianexpress.com": {"tier": "high", "label": "Indian news"},
+    "ndtv.com": {"tier": "medium", "label": "Indian news"},
+    "rbi.org.in": {"tier": "high", "label": "Government / central bank"},
+    "pib.gov.in": {"tier": "high", "label": "Government press bureau"},
+    "gov.in": {"tier": "high", "label": "Government"},
+    "who.int": {"tier": "high", "label": "International institution"},
+    "un.org": {"tier": "high", "label": "International institution"}
+  },
+  "risky_domains": {
+    "example-fake-news.com": {"tier": "high-risk", "label": "Known fake-news sample"},
+    "viralclaimsnow.com": {"tier": "high-risk", "label": "Viral content sample"},
+    "instanttruthalerts.com": {"tier": "high-risk", "label": "Clickbait sample"},
+    "freegiveaway-alerts.com": {"tier": "high-risk", "label": "Spam / clickbait sample"}
+  },
+  "known_domain_ages": {
+    "bbc.com": 29,
+    "reuters.com": 28,
+    "apnews.com": 30,
+    "thehindu.com": 29,
+    "indianexpress.com": 28,
+    "ndtv.com": 28,
+    "rbi.org.in": 28,
+    "pib.gov.in": 20,
+    "who.int": 27,
+    "un.org": 32
+  },
+  "suspicious_tlds": [".xyz", ".top", ".click", ".buzz", ".gq", ".win", ".loan"]
+}

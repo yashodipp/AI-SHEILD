@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AI Shield - Unified Deepfake & Fake News Detection System | Dashboard</title>
+  <link rel="stylesheet" href="/css/style.css">
+  <link rel="stylesheet" href="/css/agent.css">
+  <link rel="stylesheet" href="/css/voice.css">
+</head>
+<body>
+  <div class="page-shell">
+    <header class="topbar">
+      <a class="brand" href="/">
+        <span class="brand-mark">AI</span>
+        <span>Shield</span>
+      </a>
+      <nav class="nav-links">
+        <a class="active" href="/dashboard.html">Dashboard</a>
+        <a href="/upload.html">Analyze</a>
+        <a href="/history.html">History</a>
+        <a href="/feedback.html">Feedback</a>
+      </nav>
+    </header>
+
+    <main>
+      <section class="page-hero reveal compact">
+        <div>
+          <p class="eyebrow">Mission Control</p>
+          <h1>AI Shield - Unified Deepfake &amp; Fake News Detection System</h1>
+          <p class="hero-text">Track recent analyses, inspect generated reports, and use the AI assistant without leaving the workspace.</p>
+        </div>
+        <a class="button primary" href="/upload.html">Run New Analysis</a>
+      </section>
+
+      <section class="section reveal">
+        <div class="stats-grid" id="summaryGrid">
+          <article class="stat-card loading-card">
+            <span class="stat-label">Loading</span>
+            <strong>Fetching dashboard metrics...</strong>
+          </article>
+        </div>
+      </section>
+
+      <section class="section layout-grid reveal">
+        <div class="stack">
+          <div class="card-panel">
+            <div class="section-heading inline">
+              <div>
+                <p class="eyebrow">Recent Activity</p>
+                <h2>Latest analysis logs</h2>
+              </div>
+            </div>
+            <div class="list-shell" id="recentAnalyses"></div>
+          </div>
+          <div class="card-panel">
+            <div class="section-heading inline">
+              <div>
+                <p class="eyebrow">Reports</p>
+                <h2>Recent downloads</h2>
+              </div>
+            </div>
+            <div class="list-shell" id="recentReports"></div>
+          </div>
+        </div>
+        <div class="stack">
+          <article class="card-panel spotlight">
+            <p class="eyebrow">AI Shield Assistant</p>
+            <h2>Talk to the dashboard in text or voice</h2>
+            <p class="hero-text">
+              Open the floating assistant to understand recent analyses, compare fake versus real counts, or ask for quick guidance about the full workflow.
+            </p>
+          </article>
+          <article class="feature-card">
+            <h3>Try asking</h3>
+            <ol class="workflow-list">
+              <li>Explain the confidence score for my latest result.</li>
+              <li>What does the dashboard show?</li>
+              <li>मुझे रिपोर्ट डाउनलोड करना है।</li>
+              <li>How can I use voice input here?</li>
+            </ol>
+          </article>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <script src="/js/script.js"></script>
+  <script src="/js/report.js"></script>
+  <script src="/js/ai_agent.js"></script>
+  <script src="/js/voice_agent.js"></script>
+</body>
+</html>

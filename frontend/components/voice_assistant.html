@@ -1,0 +1,31 @@
+<section class="voice-card">
+  <div class="assistant-header">
+    <div>
+      <p class="eyebrow">Voice Assistant</p>
+      <h3>Speech input and spoken response</h3>
+    </div>
+    <span class="status-pill" id="voiceStatusPill">Ready</span>
+  </div>
+  <div class="voice-controls">
+    <label class="input-group compact">
+      <span>Language</span>
+      <select id="voiceLanguage">
+        <option value="en">English</option>
+        <option value="hi">Hindi</option>
+      </select>
+    </label>
+    <div class="voice-buttons">
+      <button class="button primary" type="button" id="startVoiceBtn">Start Listening</button>
+      <button class="button ghost" type="button" id="stopVoiceBtn">Stop</button>
+    </div>
+  </div>
+  <div class="voice-transcript">
+    <p class="voice-label">Transcript</p>
+    <div id="voiceTranscript">Speech input will appear here.</div>
+  </div>
+  <div class="voice-transcript">
+    <p class="voice-label">Assistant Reply</p>
+    <div id="voiceReply">Voice responses are enabled through the browser speech engine.</div>
+  </div>
+</section>
+

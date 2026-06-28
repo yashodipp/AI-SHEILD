@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AI Shield | Unified Detection Platform</title>
+  <link rel="stylesheet" href="/css/style.css">
+  <link rel="stylesheet" href="/css/agent.css">
+</head>
+<body>
+  <div class="page-shell">
+    <header class="topbar">
+      <a class="brand" href="/">
+        <span class="brand-mark">AI</span>
+        <span>Shield</span>
+      </a>
+      <nav class="nav-links">
+        <a href="/dashboard.html">Dashboard</a>
+        <a href="/upload.html">Analyze</a>
+        <a href="/history.html">History</a>
+        <a href="/feedback.html">Feedback</a>
+      </nav>
+    </header>
+
+    <main>
+      <section class="hero reveal">
+        <div class="hero-copy">
+          <p class="eyebrow">Trust Signals For Synthetic Media</p>
+          <h1>Detect deepfakes, fake voices, and fake news from one interface.</h1>
+          <p class="hero-text">
+            AI Shield combines multimedia analysis, multilingual AI assistance, and downloadable reports in a single operational dashboard.
+          </p>
+          <div class="hero-actions">
+            <a class="button primary" href="/upload.html">Start Analysis</a>
+            <a class="button secondary" href="/dashboard.html">Open Dashboard</a>
+          </div>
+        </div>
+        <div class="hero-panel">
+          <div class="stat-card spotlight">
+            <span class="stat-label">Detection Modes</span>
+            <strong>Video, Audio, Text</strong>
+            <p>Unified intake for deepfake video, synthetic voice, and misinformation analysis.</p>
+          </div>
+          <div class="hero-grid">
+            <article class="stat-card">
+              <span class="stat-label">Voice Assistant</span>
+              <strong>Hindi + English</strong>
+            </article>
+            <article class="stat-card">
+              <span class="stat-label">Reports</span>
+              <strong>PDF + CSV</strong>
+            </article>
+            <article class="stat-card">
+              <span class="stat-label">Result View</span>
+              <strong>Confidence + Explainability</strong>
+            </article>
+            <article class="stat-card">
+              <span class="stat-label">Workflow</span>
+              <strong>Upload → Analyze → Download</strong>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section class="section reveal">
+        <div class="section-heading">
+          <p class="eyebrow">Core Capabilities</p>
+          <h2>Built for practical investigation workflows</h2>
+        </div>
+        <div class="feature-grid">
+          <article class="feature-card">
+            <h3>Deepfake Video Detection</h3>
+            <p>Upload suspect clips and inspect fake probability, confidence, and artifact-driven explanations.</p>
+          </article>
+          <article class="feature-card">
+            <h3>AI Voice Detection</h3>
+            <p>Estimate whether uploaded speech sounds synthetic using audio metadata and signal-oriented heuristics.</p>
+          </article>
+          <article class="feature-card">
+            <h3>Fake News Detection</h3>
+            <p>Paste content to score misinformation indicators, source cues, and credibility markers.</p>
+          </article>
+          <article class="feature-card">
+            <h3>AI Assistant</h3>
+            <p>Ask questions in text or speech and get bilingual guidance on results, workflow, and reports.</p>
+          </article>
+        </div>
+      </section>
+
+      <section class="section dual-panel reveal">
+        <div class="info-panel">
+          <p class="eyebrow">System Flow</p>
+          <h2>Operational Path</h2>
+          <ol class="workflow-list">
+            <li>User uploads media or pastes text content.</li>
+            <li>Frontend sends the request to Flask APIs.</li>
+            <li>Detection modules score risk and confidence.</li>
+            <li>Results, explanation, and reports are generated.</li>
+            <li>AI assistant explains outputs in text or voice.</li>
+          </ol>
+        </div>
+        <article class="card-panel spotlight">
+          <p class="eyebrow">AI Shield Assistant</p>
+          <h2>Use the floating assistant anywhere on the site</h2>
+          <p class="hero-text">
+            Open the circular AI button to chat, speak in Hindi or English, hear spoken replies, and get guided help for analysis, confidence scores, and report downloads.
+          </p>
+          <div class="meta-list">
+            <span class="status-pill neutral">Floating Popup</span>
+            <span class="status-pill neutral">Voice Input</span>
+            <span class="status-pill neutral">Speech Output</span>
+            <span class="status-pill neutral">Session Memory</span>
+          </div>
+        </article>
+      </section>
+    </main>
+  </div>
+
+  <script src="/js/script.js"></script>
+  <script src="/js/voice_agent.js"></script>
+  <script src="/js/ai_agent.js"></script>
+</body>
+</html>

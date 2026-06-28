@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AI Shield | History</title>
+  <link rel="stylesheet" href="/css/style.css">
+  <link rel="stylesheet" href="/css/agent.css">
+</head>
+<body>
+  <div class="page-shell">
+    <header class="topbar">
+      <a class="brand" href="/">
+        <span class="brand-mark">AI</span>
+        <span>Shield</span>
+      </a>
+      <nav class="nav-links">
+        <a href="/dashboard.html">Dashboard</a>
+        <a href="/upload.html">Analyze</a>
+        <a class="active" href="/history.html">History</a>
+        <a href="/feedback.html">Feedback</a>
+      </nav>
+    </header>
+
+    <main>
+      <section class="page-hero reveal compact">
+        <div>
+          <p class="eyebrow">Analysis History</p>
+          <h1>Review past detections in one dedicated page</h1>
+          <p class="hero-text">Track latest analysis logs, recent report downloads, confidence levels, and summaries in one dedicated history workspace.</p>
+        </div>
+        <a class="button primary" href="/upload.html">Run New Analysis</a>
+      </section>
+
+      <section class="section reveal">
+        <div class="stats-grid" id="historySummaryGrid">
+          <article class="stat-card">
+            <span class="stat-label">Loading</span>
+            <strong>Fetching history...</strong>
+          </article>
+        </div>
+      </section>
+
+      <section class="section reveal">
+        <div class="layout-grid history-layout">
+          <div class="stack">
+            <article class="card-panel">
+              <div class="section-heading inline">
+                <div>
+                  <p class="eyebrow">Recent Activity</p>
+                  <h2>Latest analysis logs</h2>
+                </div>
+              </div>
+              <div class="list-shell" id="historyList"></div>
+            </article>
+
+            <article class="card-panel">
+              <div class="section-heading inline">
+                <div>
+                  <p class="eyebrow">Reports</p>
+                  <h2>Recent downloads</h2>
+                </div>
+              </div>
+              <div class="list-shell" id="recentReports"></div>
+            </article>
+          </div>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <script src="/js/script.js"></script>
+  <script src="/js/report.js"></script>
+  <script src="/js/history.js"></script>
+  <script src="/js/voice_agent.js"></script>
+  <script src="/js/ai_agent.js"></script>
+</body>
+</html>

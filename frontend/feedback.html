@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AI Shield | Feedback</title>
+  <link rel="stylesheet" href="/css/style.css">
+  <link rel="stylesheet" href="/css/feedback.css">
+  <link rel="stylesheet" href="/css/agent.css">
+</head>
+<body>
+  <div class="page-shell">
+    <header class="topbar">
+      <a class="brand" href="/">
+        <span class="brand-mark">AI</span>
+        <span>Shield</span>
+      </a>
+      <nav class="nav-links">
+        <a href="/dashboard.html">Dashboard</a>
+        <a href="/upload.html">Analyze</a>
+        <a href="/history.html">History</a>
+        <a class="active" href="/feedback.html">Feedback</a>
+      </nav>
+    </header>
+
+    <main>
+      <section class="page-hero reveal compact">
+        <div>
+          <p class="eyebrow">Feedback Loop</p>
+          <h1>Tell us where the workflow needs to be sharper</h1>
+          <p class="hero-text">Capture usability issues, false positives, missing features, or report-quality feedback directly into the backend log.</p>
+        </div>
+      </section>
+
+      <section class="section reveal">
+        <div class="feedback-layout">
+          <article class="feedback-panel">
+            <form id="feedbackForm" class="feedback-form">
+              <div class="feedback-grid">
+                <label class="input-group">
+                  <span>Name</span>
+                  <input type="text" name="name" placeholder="Your name">
+                </label>
+                <label class="input-group">
+                  <span>Email</span>
+                  <input type="email" name="email" placeholder="you@example.com">
+                </label>
+              </div>
+
+              <div class="feedback-grid">
+                <label class="input-group">
+                  <span>Category</span>
+                  <select name="category">
+                    <option value="general">General</option>
+                    <option value="video">Video Detection</option>
+                    <option value="audio">Voice Detection</option>
+                    <option value="text">Fake News Detection</option>
+                    <option value="assistant">AI Assistant</option>
+                  </select>
+                </label>
+                <label class="input-group">
+                  <span>Rating</span>
+                  <select name="rating">
+                    <option value="5">5 - Excellent</option>
+                    <option value="4">4 - Good</option>
+                    <option value="3">3 - Average</option>
+                    <option value="2">2 - Needs Work</option>
+                    <option value="1">1 - Poor</option>
+                  </select>
+                </label>
+              </div>
+
+              <label class="input-group">
+                <span>Message</span>
+                <textarea name="message" rows="8" placeholder="Describe the issue, result quality, UI friction, or request." required></textarea>
+              </label>
+
+              <button class="button primary" type="submit">Submit Feedback</button>
+            </form>
+            <div class="feedback-status" id="feedbackStatus"></div>
+          </article>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <script src="/js/script.js"></script>
+  <script src="/js/feedback.js"></script>
+  <script src="/js/voice_agent.js"></script>
+  <script src="/js/ai_agent.js"></script>
+</body>
+</html>

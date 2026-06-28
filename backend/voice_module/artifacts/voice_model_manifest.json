@@ -1,0 +1,26 @@
+{
+  "name": "ai-shield-voice-baseline",
+  "version": "1.0.0",
+  "sample_rate": 16000,
+  "clip_seconds": 6,
+  "ensemble_weights": {
+    "cnn": 0.34,
+    "lstm": 0.33,
+    "transformer": 0.33
+  },
+  "feature_weights": {
+    "breathing_score": -1.35,
+    "pitch_consistency_score": 1.4,
+    "robotic_tone_score": 1.2,
+    "micro_pause_absence_score": 1.5,
+    "background_consistency_score": 0.95,
+    "spectral_smoothness_score": 1.15,
+    "spectral_flatness": -0.3,
+    "pitch_std_hz": -0.015,
+    "pause_ratio": -0.7,
+    "energy_variation": -0.85,
+    "spectral_bandwidth_mean": -0.00008
+  },
+  "bias": -0.18,
+  "threshold": 0.5
+}

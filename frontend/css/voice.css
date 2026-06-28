@@ -1,0 +1,43 @@
+.voice-card {
+  display: grid;
+  gap: 18px;
+}
+
+.voice-module-specs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 16px;
+}
+
+.voice-controls {
+  display: grid;
+  gap: 14px;
+}
+
+.voice-transcript {
+  padding: 16px;
+  border-radius: 18px;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(120, 169, 214, 0.12);
+}
+
+.voice-label {
+  margin: 0 0 8px;
+  color: var(--muted);
+  font-size: 0.82rem;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+}
+
+#voiceTranscript,
+#voiceReply {
+  min-height: 48px;
+  color: var(--ink);
+  line-height: 1.6;
+}
+
+.breathing-segment-list {
+  display: grid;
+  gap: 10px;
+}

@@ -1,0 +1,5 @@
+path,label,source
+/absolute/path/to/asvspoof_real_001.wav,real,ASVspoof
+/absolute/path/to/asvspoof_fake_001.wav,fake,ASVspoof
+/absolute/path/to/for_real_001.wav,real,Fake-or-Real
+/absolute/path/to/for_fake_001.wav,fake,Fake-or-Real

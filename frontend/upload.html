@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AI Shield | Analyze Content</title>
+  <link rel="stylesheet" href="/css/style.css">
+  <link rel="stylesheet" href="/css/agent.css">
+  <link rel="stylesheet" href="/css/voice.css">
+</head>
+<body>
+  <div class="page-shell">
+    <header class="topbar">
+      <a class="brand" href="/">
+        <span class="brand-mark">AI</span>
+        <span>Shield</span>
+      </a>
+      <nav class="nav-links">
+        <a href="/dashboard.html">Dashboard</a>
+        <a class="active" href="/upload.html">Analyze</a>
+        <a href="/history.html">History</a>
+        <a href="/feedback.html">Feedback</a>
+      </nav>
+    </header>
+
+    <main>
+      <section class="page-hero reveal compact">
+        <div>
+          <p class="eyebrow">Unified Detection Workspace</p>
+          <h1>Upload files or paste source URLs from one analysis page</h1>
+          <p class="hero-text">Each module now follows the same intake pattern: a full-width horizontal pair of inputs, instant prediction cards, explainable analysis, and PDF or CSV report downloads.</p>
+        </div>
+      </section>
+
+      <section class="section reveal analysis-modules-stack">
+        <article class="card-panel module-panel">
+          <div class="panel-header">
+            <div>
+              <p class="eyebrow">Module 1</p>
+              <h2>AI Shield - Video Detection System</h2>
+            </div>
+            <p class="hero-text compact-copy">Upload a clip or paste a video URL. AI Shield samples suspicious segments, checks generation markers, and returns explainable real-or-fake output with downloadable reports.</p>
+          </div>
+          <div class="module-intake-grid">
+            <form id="videoForm" class="analysis-form intake-card">
+              <label class="input-group">
+                <span>Upload Video File</span>
+                <input type="file" name="video" accept=".mp4,.mov,.avi,.mkv,.webm" required>
+              </label>
+              <button class="button primary" type="submit">Analyze Video File</button>
+            </form>
+            <form id="videoUrlForm" class="analysis-form intake-card">
+              <label class="input-group">
+                <span>Paste Video URL</span>
+                <input type="url" name="url" placeholder="https://example.com/video-or-post" required>
+              </label>
+              <button class="button primary" type="submit">Analyze Video URL</button>
+            </form>
+          </div>
+          <div class="module-spec-row">
+            <span class="status-pill neutral">Input: File + URL</span>
+            <span class="status-pill neutral">Output: REAL / FAKE</span>
+            <span class="status-pill neutral">Reports: PDF + CSV</span>
+          </div>
+          <div class="component-shell result-host" id="videoResult" data-component="/components/result_card.html"></div>
+        </article>
+
+        <article class="card-panel module-panel">
+          <div class="panel-header">
+            <div>
+              <p class="eyebrow">Module 2</p>
+              <h2>AI Shield - Voice Detection System</h2>
+            </div>
+            <p class="hero-text compact-copy">Analyze uploaded audio or a direct voice URL using normalization, light denoising, MFCC, Mel spectrogram, Chroma, and explainable branch scores from the voice detection pipeline.</p>
+          </div>
+          <div class="module-intake-grid">
+            <form id="audioForm" class="analysis-form intake-card">
+              <label class="input-group">
+                <span>Upload Voice File</span>
+                <input type="file" name="audio" accept=".wav,.mp3,.aac,.m4a,.ogg">
+              </label>
+              <button class="button primary" type="submit">Analyze Voice File</button>
+            </form>
+            <form id="audioUrlForm" class="analysis-form intake-card">
+              <label class="input-group">
+                <span>Paste Voice URL</span>
+                <input type="url" name="url" placeholder="https://example.com/audio-or-voice-link" required>
+              </label>
+              <button class="button primary" type="submit">Analyze Voice URL</button>
+            </form>
+          </div>
+          <div class="module-spec-row">
+            <span class="status-pill neutral">Input: WAV / MP3 + URL</span>
+            <span class="status-pill neutral">Features: MFCC, Mel, Chroma</span>
+            <span class="status-pill neutral">Output: REAL / FAKE + reasons</span>
+          </div>
+          <div class="component-shell result-host" id="audioResult" data-component="/components/result_card.html"></div>
+        </article>
+
+        <article class="card-panel module-panel">
+          <div class="panel-header">
+            <div>
+              <p class="eyebrow">Module 3</p>
+              <h2>AI Shield - News Detection System</h2>
+            </div>
+            <p class="hero-text compact-copy">Use structured text analysis or paste a news URL. AI Shield scores credibility, wording, corroboration, and source signals, then shows prediction, explanation, and report downloads in the same pattern.</p>
+          </div>
+          <div class="module-intake-grid">
+            <form id="newsTextForm" class="analysis-form intake-card">
+              <label class="input-group">
+                <span>News Text / Claim</span>
+                <textarea name="body" rows="6" placeholder="Paste the article body, claim, or message here." required></textarea>
+              </label>
+              <button class="button primary" type="submit">Analyze News Text</button>
+            </form>
+            <form id="newsUrlForm" class="analysis-form intake-card">
+              <label class="input-group">
+                <span>Paste News URL</span>
+                <input type="url" name="url" placeholder="https://example.com/news-story" required>
+              </label>
+              <button class="button primary" type="submit">Analyze News URL</button>
+            </form>
+          </div>
+          <div class="module-spec-row">
+            <span class="status-pill neutral">Input: Text + URL</span>
+            <span class="status-pill neutral">Signals: Credibility + corroboration</span>
+            <span class="status-pill neutral">Reports: PDF + CSV</span>
+          </div>
+          <div class="component-shell result-host" id="newsResult" data-component="/components/result_card.html"></div>
+        </article>
+      </section>
+    </main>
+  </div>
+
+  <script src="/js/script.js"></script>
+  <script src="/js/report.js"></script>
+  <script src="/js/ai_agent.js"></script>
+  <script src="/js/voice_agent.js"></script>
+</body>
+</html>
