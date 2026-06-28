@@ -43,6 +43,7 @@ Example voice output:
 
 - Short-form deepfake video analysis with explainable suspicious segment output
 - Upload and URL-based video checks
+- YouTube/Shorts URL checks use a fast conservative source-level mode by default to avoid slow downloads and false positives from platform compression
 
 ### Full-stack UI
 
@@ -176,3 +177,4 @@ The manifest expects:
 - Keep speaker identities disjoint across train, validation, and test splits.
 - Use 2 to 10 second clips for low-latency real-time inference.
 - Runtime outputs now live in `backend/runtime/database`, `backend/runtime/reports`, and `backend/runtime/uploads`.
+- For slower frame-level analysis of YouTube/Shorts links, set `AI_SHIELD_ANALYZE_STREAMING_VIDEO=true`; direct video uploads and direct MP4 links still use video forensics by default.

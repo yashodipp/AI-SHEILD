@@ -52,7 +52,7 @@ MAX_VIDEO_DOWNLOAD_BYTES = 80 * 1024 * 1024
 MIN_VIDEO_DOWNLOAD_BYTES = 4 * 1024
 FAST_VIDEO_TIMEOUT_SECONDS = 3.0
 YT_DLP_TIMEOUT_SECONDS = 18
-YT_DLP_DOWNLOAD_TIMEOUT_SECONDS = 60
+YT_DLP_DOWNLOAD_TIMEOUT_SECONDS = 24
 STREAMING_PLATFORM_DOMAINS = (
     "youtube.com",
     "youtu.be",
@@ -97,6 +97,10 @@ def _runtime_timeout(timeout_seconds: float) -> float:
     if not _video_fast_mode_enabled():
         return float(timeout_seconds)
     return min(float(timeout_seconds), FAST_VIDEO_TIMEOUT_SECONDS)
+
+
+def _streaming_deep_forensics_enabled() -> bool:
+    return os.getenv("AI_SHIELD_ANALYZE_STREAMING_VIDEO", "false").lower() == "true"
 
 
 def _extract_title(html: str) -> str:
@@ -154,10 +158,16 @@ def _apply_title_based_video_adjustment(result: dict[str, Any], page_title: str)
     result["fake_probability"] = strengthened_probability
     result["real_probability"] = round(1 - strengthened_probability, 2)
     result["confidence"] = max(float(result.get("confidence") or 0.62), 0.88 if title_signal["score"] < 0.82 else 0.92)
-    result["summary"] = (
-        "AI Shield classified this URL video as fake because the downloaded clip was analyzed and the source title "
-        "also contains strong AI-generation cues."
-    )
+    forensics_available = int((result.get("metadata") or {}).get("forensics_available", 0) or 0)
+    if forensics_available:
+        result["summary"] = (
+            "AI Shield classified this URL video as fake because the downloaded clip was analyzed and the source title "
+            "also contains strong AI-generation cues."
+        )
+    else:
+        result["summary"] = (
+            "AI Shield classified this URL video as fake because the source title contains strong AI-generation cues."
+        )
     merged_reasons = [*title_signal["reasons"], *(result.get("reasons") or [])]
     deduped: list[str] = []
     for item in merged_reasons:
@@ -264,6 +274,9 @@ def _resolve_streaming_video_with_yt_dlp(url: str, timeout_seconds: float) -> Op
         "download_url": direct_url,
         "mode": "stream-extracted",
         "page_title": str(payload.get("title") or "").strip(),
+        "duration_seconds": payload.get("duration"),
+        "uploader": str(payload.get("uploader") or payload.get("channel") or "").strip(),
+        "webpage_url": str(payload.get("webpage_url") or url).strip(),
         "content_type": "video/mp4",
         "discovery_notes": ["A streaming-platform URL was resolved to a downloadable video stream using yt-dlp."],
     }
@@ -408,10 +421,17 @@ def _download_streaming_video_with_yt_dlp(url: str, uploads_dir: str, timeout_se
 
     command = [
         yt_dlp,
+        "--quiet",
         "--no-playlist",
         "--no-warnings",
+        "--socket-timeout",
+        "6",
+        "--retries",
+        "1",
+        "--fragment-retries",
+        "1",
         "--format",
-        "best[ext=mp4]/best",
+        "worst[ext=mp4]/worst",
         "--output",
         output_template,
         url,
@@ -686,6 +706,49 @@ def _source_only_video_result(
     }
 
 
+def _apply_streaming_fast_real_boost(
+    result: dict[str, Any],
+    *,
+    source_credibility: dict[str, Any],
+    discovery: dict[str, Any],
+) -> dict[str, Any]:
+    source_score = float(source_credibility.get("score") or 0.5)
+    title_signal = _video_title_fake_signal(str(discovery.get("page_title") or ""))
+    risky_source = bool(source_credibility.get("risky_match")) or source_score <= 0.35
+    result.setdefault("metadata", {})
+
+    if result.get("prediction") != "REAL" or risky_source or title_signal["score"] >= 0.58:
+        result["metadata"]["streaming_real_probability_boost"] = 0
+        return result
+
+    if source_score >= 0.58:
+        fake_probability = 0.14
+        confidence = 0.86
+    elif source_score >= 0.5:
+        fake_probability = 0.2
+        confidence = 0.82
+    else:
+        fake_probability = 0.28
+        confidence = 0.74
+
+    real_probability = round(1 - fake_probability, 2)
+    result["fake_probability"] = fake_probability
+    result["real_probability"] = real_probability
+    result["confidence"] = confidence
+    result["summary"] = (
+        f"AI Shield classified this streaming video link as real with "
+        f"{int(real_probability * 100)}% real probability using source credibility and neutral title signals."
+    )
+    result["reasons"] = [
+        "The streaming source and title did not contain AI-generation or deepfake cues, so fast mode assigned stronger real-side confidence.",
+        *(result.get("reasons") or []),
+    ]
+    result["explanation"] = result["reasons"]
+    result["metadata"]["streaming_real_probability_boost"] = 1
+    result["metadata"]["confidence_basis"] = "streaming-source-fast-path"
+    return result
+
+
 def analyze_video_url_input(url: str, uploads_dir: str, timeout_seconds: float = 8.0) -> dict[str, Any]:
     normalized_url = url.strip()
     _validate_http_url(normalized_url)
@@ -721,6 +784,45 @@ def analyze_video_url_input(url: str, uploads_dir: str, timeout_seconds: float =
         return _source_only_video_result(normalized_url, source_credibility, discovery)
 
     download_mode = str(discovery.get("mode") or "")
+    if download_mode == "stream-extracted" and not _streaming_deep_forensics_enabled():
+        result = _source_only_video_result(
+            normalized_url,
+            source_credibility,
+            discovery,
+            error_message=(
+                "Streaming-platform fast mode skipped the full video download to avoid slow processing and "
+                "false positives from YouTube/Shorts compression. Upload the video file or set "
+                "AI_SHIELD_ANALYZE_STREAMING_VIDEO=true for slower frame-level analysis."
+            ),
+        )
+        result.setdefault("metadata", {})
+        result["metadata"].update(
+            {
+                "download_mode": discovery.get("mode"),
+                "streaming_platform_fast_path": 1,
+                "streaming_deep_forensics_enabled": 0,
+                "uploader": discovery.get("uploader", ""),
+                "source_duration_seconds": discovery.get("duration_seconds"),
+                "webpage_url": discovery.get("webpage_url", normalized_url),
+                "fast_mode": int(_video_fast_mode_enabled()),
+                "runtime_timeout_seconds": runtime_timeout,
+                "forensics_available": 0,
+            }
+        )
+        result["reasons"] = [
+            "YouTube/Shorts links are handled conservatively in fast mode because platform compression can look suspicious to lightweight frame heuristics.",
+            *(result.get("reasons") or []),
+        ]
+        result["explanation"] = result["reasons"]
+        result = _apply_streaming_fast_real_boost(
+            result,
+            source_credibility=source_credibility,
+            discovery=discovery,
+        )
+        result = _apply_title_based_video_adjustment(result, str(discovery.get("page_title") or ""))
+        result["metadata"].setdefault("url_conservative_override", 1)
+        return result
+
     try:
         if download_mode == "stream-extracted":
             downloaded = _download_streaming_video_with_yt_dlp(
@@ -791,6 +893,11 @@ def analyze_video_url_input(url: str, uploads_dir: str, timeout_seconds: float =
             "download_validation_reason": downloaded.get("validation_reason", ""),
             "download_head_signature": downloaded.get("head_signature", ""),
             "download_method": downloaded.get("download_method", "requests"),
+            "streaming_platform_fast_path": 0,
+            "streaming_deep_forensics_enabled": int(download_mode != "stream-extracted" or _streaming_deep_forensics_enabled()),
+            "uploader": discovery.get("uploader", ""),
+            "source_duration_seconds": discovery.get("duration_seconds"),
+            "webpage_url": discovery.get("webpage_url", normalized_url),
             "download_available": 1,
             "fast_mode": int(_video_fast_mode_enabled()),
             "runtime_timeout_seconds": runtime_timeout,

@@ -28,7 +28,6 @@ AI_EXPORT_MARKERS = (
     b"DeepFaceLab",
     b"Generated",
     b"HeyGen",
-    b"Lavf",
     b"Pika",
     b"Runway",
     b"Synthesia",

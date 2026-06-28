@@ -592,6 +592,7 @@ def test_video_url_service_rejects_invalid_downloaded_html_payload(monkeypatch):
 def test_video_url_service_uses_ytdlp_download_for_streaming_links(monkeypatch):
     import backend.services.video_intelligence_service as video_service
 
+    monkeypatch.setenv("AI_SHIELD_ANALYZE_STREAMING_VIDEO", "true")
     monkeypatch.setattr(
         video_service,
         "_cached_source_credibility",
@@ -660,6 +661,53 @@ def test_video_url_service_uses_ytdlp_download_for_streaming_links(monkeypatch):
     assert download_calls["requests"] == 0
     assert result["metadata"]["download_method"] == "yt-dlp"
     assert result["metadata"]["url_debug"]["download_method"] == "yt-dlp"
+
+
+def test_video_url_service_uses_fast_source_only_for_streaming_links_by_default(monkeypatch):
+    import backend.services.video_intelligence_service as video_service
+
+    monkeypatch.delenv("AI_SHIELD_ANALYZE_STREAMING_VIDEO", raising=False)
+    monkeypatch.setattr(
+        video_service,
+        "_cached_source_credibility",
+        lambda url: {"score": 0.6, "risky_match": None, "reasons": ["HTTPS is enabled for the submitted source."]},
+    )
+    monkeypatch.setattr(
+        video_service,
+        "_cached_discovery",
+        lambda url, timeout: {
+            "download_url": "https://manifest.googlevideo.com/api/manifest/hls_playlist/index.m3u8",
+            "mode": "stream-extracted",
+            "page_title": "Silenced, not defeated. My message to the aam aadmi",
+            "duration_seconds": 138,
+            "uploader": "Raghav Chadha Official",
+            "content_type": "video/mp4",
+            "discovery_notes": ["A streaming-platform URL was resolved to a downloadable video stream using yt-dlp."],
+        },
+    )
+
+    download_calls = {"yt_dlp": 0, "analysis": 0}
+
+    def fake_download_streaming_video_with_yt_dlp(*args, **kwargs):
+        download_calls["yt_dlp"] += 1
+        raise AssertionError("Streaming fast mode should not download the full video")
+
+    def fake_analyze_video(*args, **kwargs):
+        download_calls["analysis"] += 1
+        raise AssertionError("Streaming fast mode should not run frame-level analysis")
+
+    monkeypatch.setattr(video_service, "_download_streaming_video_with_yt_dlp", fake_download_streaming_video_with_yt_dlp)
+    monkeypatch.setattr(video_service, "analyze_video", fake_analyze_video)
+
+    result = video_service.analyze_video_url_input("https://youtube.com/shorts/example", uploads_dir="/tmp")
+    assert result["prediction"] == "REAL"
+    assert result["real_probability"] >= 0.85
+    assert result["confidence"] >= 0.85
+    assert result["video_forensics"]["signals"]["source_only"] == 1
+    assert result["metadata"]["streaming_platform_fast_path"] == 1
+    assert result["metadata"]["streaming_real_probability_boost"] == 1
+    assert result["metadata"]["source_duration_seconds"] == 138
+    assert download_calls == {"yt_dlp": 0, "analysis": 0}
 
 
 def test_video_url_service_flips_to_fake_for_strong_ai_title_markers(monkeypatch):
